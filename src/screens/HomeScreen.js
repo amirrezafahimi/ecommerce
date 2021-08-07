@@ -6,27 +6,28 @@ import {listProducts} from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-function HomeScreen(props) {
-    const dispatch = useDispatch();
-    const productList = useSelector(state => state.productList);
+function HomeScreen() {
+
+    const dispatch = useDispatch()
+    const productList = useSelector(state => state.productList)
     const {error, loading, products} = productList;
 
     useEffect(() => {
+        console.log("useEffect called from HomeScreen");
         dispatch(listProducts());
     }, [dispatch]);
 
     return (
         <div>
             <h2>Latest Products</h2>
-            {loading ? (<Loader/>) : error ? (<Message variant="danger" children={error}/>) : (
+            {loading ? <Loader/> : error ? <Message variant="danger" children={error}/> :
                 <Row>
                     {products.map(product => (
                         <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                             <Product product={product}/>
                         </Col>
                     ))}
-                </Row>
-            )}
+                </Row>}
         </div>
     );
 }
