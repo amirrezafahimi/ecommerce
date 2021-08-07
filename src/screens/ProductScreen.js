@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import axios from "axios";
 import {Link} from "react-router-dom";
-import {Row, Col, Image, ListGroup, Button, Card, ListGroupItem} from "react-bootstrap";
+import {Row, Col, Image, ListGroup, Button, Card} from "react-bootstrap";
 import Rating from "../components/Rating";
 
 function ProductScreen({match}) {
