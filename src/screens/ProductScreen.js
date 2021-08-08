@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Row, Col, Image, ListGroup, Button, Card, Form} from "react-bootstrap";
 import Rating from "../components/Rating";
 import Loader from "../components/Loader";
-import Message from "../components/Message";
+import {Message} from "../components/Message";
 import {listProductDetails} from "../actions/productActions";
 
 function ProductScreen({match, history}) {
@@ -15,13 +15,12 @@ function ProductScreen({match, history}) {
     const {loading, error, product} = productDetails;
 
     useEffect(() => {
-        console.log("useEffect called from ProductScreen");
 
         dispatch(listProductDetails(match.params.id));
     }, [dispatch, match]);
 
     const addToCartHandler = () => {
-        history.push(`/cart/${match.params.id}?qty=${qty}`)
+        history.push(`/cart/${match.params.id}?qty=${qty}`);
     }
 
     return (
@@ -44,7 +43,7 @@ function ProductScreen({match, history}) {
                                 </ListGroup.Item>
 
                                 <ListGroup.Item>
-                                    <Rating value={product.rating} text={`${product.num_reviews} reviews`}
+                                    <Rating value={product.rating} text={`${product.numReviews} reviews`}
                                             color={"#f8e825"}/>
                                 </ListGroup.Item>
 
@@ -74,12 +73,12 @@ function ProductScreen({match, history}) {
                                         <Row>
                                             <Col>Status</Col>
                                             <Col>
-                                                {product.count_in_stock > 0 ? "In Stock" : "Out of Stock"}
+                                                {product.countInStock > 0 ? "In Stock" : "Out of Stock"}
                                             </Col>
                                         </Row>
                                     </ListGroup.Item>
 
-                                    {product.count_in_stock > 0 && (
+                                    {product.countInStock > 0 && (
                                         <ListGroup.Item>
                                             <Row>
                                                 <Col>Qty</Col>
@@ -90,7 +89,7 @@ function ProductScreen({match, history}) {
                                                         onChange={(e) => setQty(e.target.value)}>
 
                                                         {
-                                                            [...Array(product.count_in_stock).keys()].map((x) => (
+                                                            [...Array(product.countInStock).keys()].map((x) => (
                                                                 <option key={x + 1} value={x + 1}>
                                                                     {x + 1}
                                                                 </option>
@@ -104,7 +103,7 @@ function ProductScreen({match, history}) {
 
                                     <ListGroup.Item>
                                         <Button className="btn-block" type="button"
-                                                disabled={product.count_in_stock === 0} onClick={addToCartHandler}>
+                                                disabled={product.countInStock === 0} onClick={addToCartHandler}>
                                             Add to Cart
                                         </Button>
                                     </ListGroup.Item>

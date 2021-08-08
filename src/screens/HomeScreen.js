@@ -4,7 +4,7 @@ import {Row, Col} from "react-bootstrap";
 import Product from "../components/Product";
 import {listProducts} from "../actions/productActions";
 import Loader from "../components/Loader";
-import Message from "../components/Message";
+import {Message} from "../components/Message";
 
 function HomeScreen() {
 
@@ -13,7 +13,6 @@ function HomeScreen() {
     const {error, loading, products} = productList;
 
     useEffect(() => {
-        console.log("useEffect called from HomeScreen");
         dispatch(listProducts());
     }, [dispatch]);
 
