@@ -18,7 +18,7 @@ export const listProducts = () => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: PRODUCT_LIST_FAIL,
-            payload: e.response && e.response.data.message ? e.response.data.message : e.message
+            payload: e.response && e.response.data.detail ? e.response.data.detail : e.message
         });
     }
 };
@@ -32,7 +32,7 @@ export const listProductDetails = (id) => async (dispatch) => {
     } catch (e) {
         dispatch({
             type: PRODUCT_DETAILS_FAIL,
-            payload: e.response && e.response.data.message ? e.response.data.message : e.message
+            payload: e.response && e.response.data.detail ? e.response.data.detail : e.message
         });
     }
 };
