@@ -4,7 +4,7 @@ import {Form, Button, Row, Col} from "react-bootstrap";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import {useDispatch, useSelector} from "react-redux";
-import {login, register} from "../actions/userActions";
+import {register} from "../actions/userActions";
 import FormContainer from "../components/FormContainer";
 
 const RegisterScreen = ({location, history}) => {
@@ -84,13 +84,14 @@ const RegisterScreen = ({location, history}) => {
 
                 <Button type="submit" variant="primary">Register</Button>
 
-                <Row className="py-3">
-                    <Col>
-                        Have an Account?
-                        <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>Sign In</Link>
-                    </Col>
-                </Row>
             </Form>
+
+            <Row className="py-3">
+                <Col>
+                    Have an Account?
+                    <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>Sign In</Link>
+                </Col>
+            </Row>
         </FormContainer>
     );
 };
