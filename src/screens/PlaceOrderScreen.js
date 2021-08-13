@@ -1,11 +1,17 @@
-import React from 'react';
-import {useSelector} from "react-redux";
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from "react-redux";
 import CheckoutSteps from "../components/CheckoutSteps";
 import {Col, Row, ListGroup, Image, Card, Button} from "react-bootstrap";
 import Message from "../components/Message";
 import {Link} from "react-router-dom";
+import {createOrder} from "../actions/orderActions";
+import {ORDER_CREATE_RESET} from "../constants/orderConstants";
 
-const PlaceholderScreen = () => {
+const PlaceOrderScreen = ({history}) => {
+    const orderCreate = useSelector(state => state.orderCreate);
+    const {order, error, success} = orderCreate;
+
+    const dispatch = useDispatch();
     const cart = useSelector(state => state.cart);
 
     cart.itemsPrice = cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
@@ -13,9 +19,27 @@ const PlaceholderScreen = () => {
     cart.taxPrice = (Number(0.082) * cart.itemsPrice).toFixed(2);
     cart.totalPrice = (Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)).toFixed(2);
 
+    if (!cart.paymentMethod) {
+        history.push("/payment");
+    }
+
+    useEffect(() => {
+        if (success) {
+            history.push(`/orders/${order._id}`);
+            dispatch({type: ORDER_CREATE_RESET});
+        }
+    }, [success, history]);
 
     const placeOrder = () => {
-        console.log("place order");
+        dispatch(createOrder({
+            orderItems: cart.cartItems,
+            shippingAddress: cart.shippingAddress,
+            paymentMethod: cart.paymentMethod,
+            itemsPrice: cart.itemsPrice,
+            shippingPrice: cart.shippingPrice,
+            taxPrice: cart.taxPrice,
+            totalPrice: cart.totalPrice
+        }));
     }
 
     return (
@@ -110,6 +134,10 @@ const PlaceholderScreen = () => {
                             </ListGroup.Item>
 
                             <ListGroup.Item>
+                                {error && (<Message variant="danger">{error}</Message>)}
+                            </ListGroup.Item>
+
+                            <ListGroup.Item>
                                 <Button type="button"
                                         className="btn-block"
                                         disabled={cart.cartItems === 0}
@@ -125,4 +153,4 @@ const PlaceholderScreen = () => {
     );
 };
 
-export default PlaceholderScreen;
+export default PlaceOrderScreen;
