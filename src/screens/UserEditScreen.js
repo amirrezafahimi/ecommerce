@@ -6,7 +6,7 @@ import Message from "../components/Message";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserDetails, updateUser} from "../actions/userActions";
 import FormContainer from "../components/FormContainer";
-import {USER_UPDATE_REQUEST, USER_UPDATE_RESET} from "../constants/userConstants";
+import {USER_UPDATE_RESET} from "../constants/userConstants";
 
 const EditUserScreen = ({match, history}) => {
     const userId = match.params.id;
@@ -36,7 +36,7 @@ const EditUserScreen = ({match, history}) => {
                 setAdmin(user.isAdmin);
             }
         }
-    }, [user, userId, successUpdate, history]);
+    }, [user, userId, successUpdate, history, dispatch]);
 
     const submitHandler = (event) => {
         event.preventDefault();
