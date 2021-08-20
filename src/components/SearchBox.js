@@ -12,7 +12,7 @@ const SearchBox = () => {
         event.preventDefault();
 
         if (keyword) {
-            history.push(`/?keyword=${keyword}`);
+            history.push(`/?keyword=${keyword}&page=1`);
         } else {
             history.push(history.push(history.location.pathname))
         }
